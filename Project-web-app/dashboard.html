@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantitative Solutions Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <script>
+        // Check if the user is authenticated
+if (!localStorage.getItem('authenticated')) {
+    // If not logged in, redirect to the login page
+    window.location.href = 'login.html';
+}
+    </script>
+
+</head>
+<body>
+    <header>
+        <img src="images/newlogo.png" alt="Quantitative Solutions Logo"
+        class="logo">
+        <h1>Quantitative Solutions</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Reports</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="dashboard">
+            <h2>User Dashboard</h2>
+            <div class="chart-container">
+                <canvas id="myChart"></canvas>
+            </div>
+        </section>
+        <section class="chatbot">
+            <h2>Chatbot Assistant</h2>
+            <div class="chatbox">
+                <p>Welcome! How can I assist you today?</p>
+                <input type="text" placeholder="Type your message...">
+                <button>Send</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <section class="contact-info">
+                <h2>Where to Find US</h2>
+                <p>085 Colnbrook,<br>
+                6th Road,<br>
+            Midrand</p>
+
+            <h2>Follow Us</h2>
+            <ul>
+                <li><a href="https://www.facebook.com/"
+                target="_blank">Facebook</a></li>
+                <li><a href="https://www.twitter.com/">Twitter</a></li>
+            </ul>
+            <h2>Contact Us</h2>
+            <p>Email: <a href="mailto:info@quant-solutions.co.za">info@quant-solutions.co.za</a><br>
+               Phone: +27 82 380 5323</p>
+
+            </section>
+        </div>
+        <p>&copy; 2024 Quantitative Solutions</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/plugins.js"></script>
+</body>
+</html>
