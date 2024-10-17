@@ -26,25 +26,41 @@ document.querySelector('form').addEventListener('submit', function(event) {
     window.location.href = 'dashboard.html'; // Redirect to dashboard page
 });
 
+//script for analysis
 
+document.getElementById('upload-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const fileInput = document.getElementById('fileInput').files[0];
 
-const ctx = document.getElementById('myChart').getContext('2d');
-const myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [{
-            label: 'Sample Data',
-            data: [12, 19, 3, 5, 2, 3, 7],
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
+    if (fileInput) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const csvData = e.target.result;
+            analyzeData(csvData);
+        };
+        reader.readAsText(fileInput);
     }
 });
+
+function analyzeData(csvData) {
+    const rows = csvData.split('\n').map(row => row.split(','));
+    const numRows = rows.length;
+    const numColumns = rows[0].length;
+    
+    // Calculate column-wise averages (as an example)
+    const columnSums = Array(numColumns).fill(0);
+    for (let i = 1; i < numRows; i++) {
+        for (let j = 0; j < numColumns; j++) {
+            columnSums[j] += parseFloat(rows[i][j]) || 0;
+        }
+    }
+    const columnAverages = columnSums.map(sum => sum / numRows);
+
+    // Display results
+    const resultsDiv = document.getElementById('analysis-results');
+    resultsDiv.innerHTML = `
+        <p>Number of Rows: ${numRows}</p>
+        <p>Number of Columns: ${numColumns}</p>
+        <p>Column Averages: ${columnAverages.join(', ')}</p>
+    `;
+}
