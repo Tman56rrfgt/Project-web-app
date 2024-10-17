@@ -4,71 +4,155 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quantitative Solutions Dashboard</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
     
     <script>
         // Check if the user is authenticated
-if (!localStorage.getItem('authenticated')) {
-    // If not logged in, redirect to the login page
-    window.location.href = 'login.html';
-}
+        if (!localStorage.getItem('authenticated')) {
+            window.location.href = 'index.html#login'; // Redirect to login section
+        }
     </script>
 
 </head>
 <body>
     <header>
-        <img src="images/newlogo.png" alt="Quantitative Solutions Logo"
-        class="logo">
-        <h1>Quantitative Solutions</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Reports</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
+        <div class="logo-nav">
+           <a href="index.html">
+            <img src="images/newlogo.png" alt="Quantitative Solutions Logo" class="logo">
+           </a>
+            <nav>
+                <ul>
+                    <li><a href="#overview" >Overview</a></li>
+                    <li><a href="#analytics">Analytics</a></li>
+                    <li><a href="#visualization">Visualisation</a></li>
+                </ul>
+            </nav>
+            <div class="social-icons">
+                <a href="https://www.facebook.com" target="_blank"><img src="images/icons/facebook-icon.png" alt="Facebook" class="social-icon"></a>
+                <a href="https://www.twitter.com" target="_blank"><img src="images/icons/twitter-icon.png" alt="Twitter" class="social-icon"></a>
+            </div>
+        </div>
     </header>
+
     <main>
-        <section class="dashboard">
-            <h2>User Dashboard</h2>
-            <div class="chart-container">
-                <canvas id="myChart"></canvas>
-            </div>
+       <!-- Overview Section -->
+    <section id="overview" class="dashboard-section">
+        <h2>Dashboard Overview</h2>
+        <p>Summary of key metrics and data insights.</p>
+       <div class="overview-bar">
+        <div class="summary-grid">
+        <div class="summary-item">
+            <h3>Total Users</h3>
+            <p>250</p>
+        </div>
+        <div class="summary-item">
+            <h3>Sales</h3>
+            <p>50,000</p>
+        </div>
+        <div class="summary-item">
+            <h3>Active Projects</h3>
+            <p>30</p>
+        </div>
+<div class="summary-item">
+    <h3>New Signups</h3>
+    <p>120</p>
+</div>
+       </div>
+       </div>
+
+       <div class="overview-grid">
+
+        <div class="analytics-summary">
+            <h3>Analytics Summary</h3>
+        </div>
+
+        <div class="overview-chart">
+            <h3>Data Overview Chart</h3>
+            <canvas id="overviewChart"></canvas>
+        </div>
+       </div>
         </section>
-        <section class="chatbot">
-            <h2>Chatbot Assistant</h2>
-            <div class="chatbox">
-                <p>Welcome! How can I assist you today?</p>
-                <input type="text" placeholder="Type your message...">
-                <button>Send</button>
-            </div>
+
+      <!-- Analytics Section -->
+    <section id="analytics" class="dashboard-section">
+        <h2>Analytics</h2>
+        <p>Analyze your data in detail.</p>
+        <form id="upload-form" enctype="multipart/form-data">
+            <label for="fileInput">Select CSV File:</label>
+            <input type="file" id="fileInput" accept=".csv">
+            <button type="submit">Upload and Analyze</button>
+        </form>
+
+        <script>
+            document.getElementById('upload-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const fileInput = document.getElementById('fileInput').files[0];
+            
+                if (fileInput) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const csvData = e.target.result;
+                        displayDataInGrids(csvData);
+                    };
+                    reader.readAsText(fileInput);
+                }
+            });
+            
+            function displayDataInGrids(csvData) {
+                const rows = csvData.split('\n').map(row => row.split(','));
+                const numColumns = rows[0].length; // Get number of columns from the first row
+                const resultsDiv = document.getElementById('analysis-results');
+                
+                // Clear any existing content
+                resultsDiv.innerHTML = '';
+            
+                // Loop through each column and create a grid item
+                for (let j = 0; j < numColumns; j++) {
+                    const columnValues = rows.map(row => row[j]);
+                    const gridItem = document.createElement('div');
+                    gridItem.classList.add('grid-item');
+                    gridItem.innerHTML = `<h3>Column ${j+1}</h3><p>${columnValues.join(', ')}</p>`;
+                    resultsDiv.appendChild(gridItem);
+                }
+            }
+            </script>
+            
+
+        <div id="analysis-results" class="analytics-grid">
+
+        </div>
         </section>
+
+            <!-- Visualization Section -->
+    <section id="visualization" class="dashboard-section">
+        <h2>Visualization</h2>
+        <p>Visualize your data in charts or graphs.</p>
+        <canvas id="myChart"></canvas>
+        <!-- Add your data visualizations here -->
+    </section>
+
     </main>
+
     <footer>
         <div class="footer-content">
             <section class="contact-info">
-                <h2>Where to Find US</h2>
-                <p>085 Colnbrook,<br>
-                6th Road,<br>
-            Midrand</p>
+                <h2>Where to Find Us</h2>
+                <p>085 Colnbrook,<br>6th Road,<br>Midrand</p>
 
-            <h2>Follow Us</h2>
-            <ul>
-                <li><a href="https://www.facebook.com/"
-                target="_blank">Facebook</a></li>
-                <li><a href="https://www.twitter.com/">Twitter</a></li>
-            </ul>
-            <h2>Contact Us</h2>
-            <p>Email: <a href="mailto:info@quant-solutions.co.za">info@quant-solutions.co.za</a><br>
-               Phone: +27 82 380 5323</p>
+                <h2>Follow Us</h2>
+                <ul>
+                    <li><a href="https://www.facebook.com/" target="_blank">Facebook</a></li>
+                    <li><a href="https://www.twitter.com/">Twitter</a></li>
+                </ul>
 
+                <h2>Contact Us</h2>
+                <p>Email: <a href="mailto:info@quant-solutions.co.za">info@quant-solutions.co.za</a><br>
+                   Phone: +27 82 380 5323</p>
             </section>
         </div>
         <p>&copy; 2024 Quantitative Solutions</p>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script src="js/main.js"></script>
-    <script src="js/plugins.js"></script>
 </body>
 </html>
