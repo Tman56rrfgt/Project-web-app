@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Projection</title>
+</head>
+<body>
+    <h1>Sales Projection Tool</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if graph %}
+        <h2>Projection Results</h2>
+        <p>Trend: {{ trend }}</p>
+        <p>Projected Sales (Future): {{ future_sales }}</p>
+        <img src="data:image/{{ file_format }};base64,{{ graph }}" alt="Sales Projection Graph">
+        <br>
+        
+        <!-- Download Button -->
+        <form action="{% url 'download_image' %}" method="get">
+            <button type="submit">Download Image ({{ file_format|upper }})</button>
+        </form>
+    {% endif %}
+</body>
+</html>
