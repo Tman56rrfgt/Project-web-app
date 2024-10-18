@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Header Section -->
+<header>
+    <div class="logo-nav">
+        <a href="index.html">
+            <img src="images/newlogo.png" alt="Quantitative Solutions Logo" class="logo">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="logout.php" class="btn-logout">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main>
+    <section class="dashboard-section admin-section">
+        <div class="container">
+            <h2>Admin Dashboard</h2>
+
+            <div class="admin-buttons">
+                <a href="insert_product.php" class="admin-btn">Insert Products</a>
+                <a href="view.php" class="admin-btn">View Products</a>
+                <a href="index.php?insert_category" class="admin-btn">Insert Categories</a>
+                <a href="categories.php" class="admin-btn">View Categories</a>
+                <a href="subscriptions.php" class="admin-btn">Subscriptions</a>
+                <a href="payments.php" class="admin-btn">Payment Status</a>
+                <a href="admin_dash.php?list_users" class="admin-btn">List Users</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <p>&copy; 2024 Quantitative Solutions</p>
+    </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
