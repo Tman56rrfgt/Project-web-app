@@ -8,16 +8,31 @@
 <body>
     <h1>Sales Projection Tool</h1>
 
+    <!-- Sales Form -->
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Submit</button>
     </form>
 
+    <!-- Display Graph and Results if Available -->
     {% if graph %}
         <h2>Projection Results</h2>
-        <p>Trend: {{ trend }}</p>
-        <p>Projected Sales (Future): {{ future_sales }}</p>
+        <p><strong>Trend:</strong> {{ trend }}</p>
+        
+        <!-- Future Sales Data -->
+        <p><strong>Projected Sales (Future):</strong> {{ future_sales }}</p>
+            <!-- Display Projected Sales List if Available -->
+    {% if future_sales_list %}
+    <h2>Projected Sales</h2>
+        <ul>
+            {% for month, sale in future_sales_list %}
+                <li><strong>{{ month }}:</strong> {{ sale }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+        <!-- Display Graph -->
         <img src="data:image/{{ file_format }};base64,{{ graph }}" alt="Sales Projection Graph">
         <br>
         
@@ -26,5 +41,7 @@
             <button type="submit">Download Image ({{ file_format|upper }})</button>
         </form>
     {% endif %}
+    
+
 </body>
 </html>

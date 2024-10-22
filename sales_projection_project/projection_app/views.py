@@ -10,7 +10,7 @@ from django.http import HttpResponse
 import os
 from django.conf import settings
 
-# Function to simulate seasonality effect with an offset for starting month
+# Function to simulate seasonality (e.g. Christmas) effect with an offset for starting month
 def add_seasonality(sales, months, amplitude=0.1, period=12, start_month=1):
     """Add a simple seasonal effect to the sales data with a phase shift for starting month."""
     # Shift the seasonality to start at the correct month
@@ -63,11 +63,9 @@ def sales_projection_view(request):
             else:
                 trend = "stagnant"
 
-            # Get the selected graph type
-            graph_type = form.cleaned_data['graph_type']
-
             # Generate the plot
             fig, ax = plt.subplots()
+            graph_type = form.cleaned_data['graph_type']
             create_sales_graph(ax, graph_type, sales_with_seasonality, future_sales_noisy, X, future_X, months)
 
             # Save plot to a buffer
@@ -80,10 +78,14 @@ def sales_projection_view(request):
             # Encode the image in base64 for rendering in HTML
             graph = base64.b64encode(image_png).decode('utf-8')
 
+            # Prepare future sales data for display as a list
+            future_sales_list = [(f"Month {i}", f"{sale:.2f}") for i, sale in enumerate(future_sales_noisy, start=len(sales) + 1)]
+
             return render(request, 'projection_app/sales_projection.html', {
                 'form': form,
                 'graph': graph,
                 'future_sales': future_sales_noisy,
+                'future_sales_list': future_sales_list,  # Pass the list of future sales to the template
                 'trend': trend,
             })
         
@@ -117,6 +119,7 @@ def create_sales_graph(ax, graph_type, sales_with_seasonality, future_sales_nois
         ax.set(title="Sales and Future Projections", xlabel="Month", ylabel="Sales")
 
     ax.legend()
+
 
 # View to download the generated image
 def download_image(request):
